@@ -44,13 +44,14 @@ class AddTaskController extends GetxController {
         science: scienceController.text,
         classRoom: 'jjjjjjj',
         noteTime:  stimestamp,
-        startTime: startTime,
-        endTime: endTime,
+        startTime: 12,
+        endTime: 22,
         name: teacherNameController.text,
         role: "TEACHER",
         week: 'MONDAY',
         note: false
     );
+
 
     final responce =await NetworkService.POST(
         NetworkService.apiAddTask, NetworkService.bodyAddTask(addTaskModel));

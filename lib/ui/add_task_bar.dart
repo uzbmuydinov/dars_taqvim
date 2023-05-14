@@ -17,6 +17,9 @@ class AddTaskBarPage extends StatefulWidget {
 }
 
 class _AddTaskBarPageState extends State<AddTaskBarPage> {
+
+  bool isSelected=false;
+
   final TaskController _taskController=Get.put(TaskController());
 
   final AddTaskController addTaskController = Get.find<AddTaskController>();
@@ -24,11 +27,7 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
   DateTime _selectedDate = DateTime.now();
   String _endTime = "9:30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
-  int _selectedRemind = 5;
-  List<int> remindList = [5, 10, 15, 20];
 
-  String _selectedRepeat = "Yo'q";
-  List<String> repeatList = ["Yo'q", "Har kuni", "Haftalik", "Oylik"];
   int _selectedColor=0;
 
   @override
@@ -46,7 +45,7 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
                 DateFormat.EEEE().format(DateTime.now()),
                 style: headingStyle,
               ),
-               MyInputField(title: "Sarlavha", hint: "Fan",controller: addTaskController.scienceController,),
+               MyInputField(title: "Fan", hint: "Fan",controller: addTaskController.scienceController,),
                MyInputField(
                   title: "O'qituvchi ismi", hint: "O'qituvchi ismi",controller: addTaskController.teacherNameController,),
               MyInputField(
@@ -97,80 +96,62 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
                       )),
                 ],
               ),
-              MyInputField(
-                  title: "Eslatish",
-                  hint: "$_selectedRemind minute oldin",
-                  widget: DropdownButton(
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.grey,
-                    ),
-                    iconSize: 32,
-                    elevation: 4,
-                    style: subTitleStyle,
-                    underline: Container(
-                      height: 0,
-                    ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedRemind = int.parse(newValue!);
-                      });
-                    },
-                    items:
-                    remindList.map<DropdownMenuItem<String>>((int value) {
-                      return DropdownMenuItem<String>(
-                          value: value.toString(),
-                          child: Text(value.toString()));
-                    }).toList(),
-                  )),
-              MyInputField(
-                  title: "Takrorlash",
-                  hint: "$_selectedRepeat",
-                  widget: DropdownButton(
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.grey,
-                    ),
-                    iconSize: 32,
-                    elevation: 4,
-                    style: subTitleStyle,
-                    underline: Container(
-                      height: 0,
-                    ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedRepeat = newValue!;
-                      });
-                    },
-                    items: repeatList
-                        .map<DropdownMenuItem<String>>((String? value) {
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value!,
-                            style: const TextStyle(color: Colors.grey),
-                          ));
-                    }).toList(),
-                  )),
-              const SizedBox(height: 18,),
+              const SizedBox(height: 28,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                 _colorPallete(),
-                  ElevatedButton(
-                    onPressed: ()  {
-                      _validateDate();
-                      addTaskController.addTaskNetwork(widget.week);
-                    },
-                    child:  const Text("Saqlash"),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.orange)),
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Container(
+                          padding: const EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color:Get.isDarkMode?Colors.grey.shade700:Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child:ListTile(
+                            title: Text("Eslatma",style: TextStyle(fontSize: 16,color: Colors.grey.shade500,fontWeight: FontWeight.w800),),
+                            trailing: Switch(
+                              onChanged: (value){
+                                isSelected=!isSelected;
+                              },
+                              value: isSelected,
+                              activeColor: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                  ),
+                  const SizedBox(width: 70,),
+                 ElevatedButton(
+                            onPressed: ()  {
+                              _validateDate();
+                              addTaskController.addTaskNetwork(widget.week);
+                            },
+                            child: Text("Saqlash"),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.orange)),
+
                   ),
                 ],
-              )
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                // children: [
+                //   _colorPallete(),
+                //   ElevatedButton(
+                //     onPressed: ()  {
+                //       _validateDate();
+                //       addTaskController.addTaskNetwork(widget.week);
+                //     },
+                //     child:  const Text("Saqlash"),
+                //     style: ButtonStyle(
+                //         backgroundColor: MaterialStateProperty.all(Colors.orange)),
+                //   ),
+                // ],
+              ),
             ],
           ),
+
         ),
       ),
     );
@@ -195,8 +176,6 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
           date:DateFormat.yMd().format(addTaskController.selectedDate),
           startTime:addTaskController.startTimeController.text,
           endTime:addTaskController.endTimeController.text,
-          remind:_selectedRemind,
-          repeat:_selectedRepeat,
           color:_selectedColor,
           isCompleted:0,
         ),

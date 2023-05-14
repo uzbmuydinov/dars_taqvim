@@ -27,32 +27,75 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
         backgroundColor: Get.theme.backgroundColor,
         elevation: 0,
-        title: Text(
-          "Profile",
-          style: TextStyle(
-              color: Get.isDarkMode ? Colors.white : Colors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold),
+        title: Center(
+          child: Text(
+            "Profile",
+            style: TextStyle(
+                color: Get.isDarkMode ? Colors.white : Colors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.bold),
+          ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
+      body: Container(
+        padding: const EdgeInsets.only(left: 15,top: 20,right: 15),
+        child: GestureDetector(
+          onTap: (){
+            FocusScope.of(context).unfocus();
+          },
+          child: ListView(
             children: [
-              SizedBox(
-                height: 150,
-                child: ClipRRect(
-                  child: Image.asset("assets/images/avatar.png"),
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 110,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 4,color: Colors.white),
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 10,
+                            color: Colors.black.withOpacity(0.1),
+                          )
+                        ],
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/images/avatar.png")
+                        )
+                      ),
+                    ),
+                    Positioned(
+                       bottom: 2,
+                    right: 3,
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          width: 0,
+                          color: Colors.white,
+                        ),
+                        color: Colors.blue
+                      ),
+                      child: const Icon(
+                        Icons.image_outlined,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                    ),
+                  ],
                 ),
               ),
-              const Text(
-                "Qandaharov Alisher",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+              const SizedBox(height: 30,),
+              const Center(
+                child: Text("Asliddin Bo'riyev",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w700),),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20,),
               const Divider(),
               MainCard(
                 iconWidgetLast: Icon(
@@ -124,32 +167,51 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                     SizedBox(
+                  children:  [
+                    const SizedBox(
                       width: 22.13,
                     ),
-                     Icon(
+                    const Icon(
                       Icons.exit_to_app_rounded,
                       color: Colors.red,
                     ),
-                     SizedBox(
+                    const SizedBox(
                       width: 14.13,
                     ),
-                    Text(
-                      "Logout",
-                      style: TextStyle(
-                          color: Colors.red,
+                    ElevatedButton(
+                      child: const Text('Logout',style: TextStyle( color: Colors.red,
                           fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
+                          fontWeight: FontWeight.w500),),
+                        onPressed: () {
+                          showDialog(context: context, builder: (context) {
+                            return AlertDialog(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                                title: const Text("Chiqish",style: TextStyle(color: Colors.red,fontSize: 20),),
+                                content: const Text("Chiqishingizga ishonchingiz komilmi?",style: TextStyle(
+                                  color: Colors.grey,fontSize: 17
+                                ),),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Yo'q",style: TextStyle(color: Colors.green,fontSize: 17),),),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Ha",style: TextStyle(color: Colors.red,fontSize: 17),),)
+                                ],
+                              );
+                          },
+                          );
+                        }),],
                 ),
               ),
-
             ],
           ),
         ),
-      ),
+      )
     );
   }
 
@@ -158,7 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
       isDismissible: false,
       backgroundColor: Colors.transparent,
         context: context,
-       shape: RoundedRectangleBorder(
+       shape: const RoundedRectangleBorder(
          borderRadius: BorderRadius.only(
            topRight: Radius.circular(20),
            topLeft: Radius.circular(20),
@@ -166,11 +228,11 @@ class _ProfilePageState extends State<ProfilePage> {
        ),
             builder: ((context){
               return Container(
-                padding: EdgeInsets.symmetric(vertical: 30),
+                padding: const EdgeInsets.symmetric(vertical: 30),
                 height: 450,
                   decoration: BoxDecoration(
                     color: Get.isDarkMode ? Colors.white : Colors.grey,
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: const BorderRadius.only(topRight:Radius.circular(50),topLeft: Radius.circular(50)),
                   ),
                   child: Column(
                     children: [
@@ -253,7 +315,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ElevatedButton(
                             onPressed: ()  {
                             },
-                            child:Text("Saqlash"),
+                            child:const Text("Saqlash"),
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(Colors.orange)),
                           ),
@@ -271,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
       isDismissible: false,
       backgroundColor: Colors.transparent,
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(20),
             topLeft: Radius.circular(20),
@@ -279,16 +341,16 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       builder: ((context){
         return Container(
-            padding: EdgeInsets.symmetric(vertical: 30),
+            padding: const EdgeInsets.symmetric(vertical: 30),
             height: 450,
             decoration: BoxDecoration(
               color: Get.isDarkMode ? Colors.white : Colors.grey,
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.only(topRight:Radius.circular(50),topLeft: Radius.circular(50)),
             ),
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
@@ -312,10 +374,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -337,9 +399,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                     ), //Che
                   ),),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 30,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -370,7 +432,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ElevatedButton(
                       onPressed: ()  {
                       },
-                      child:Text("Saqlash"),
+                      child:const Text("Saqlash"),
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.orange)),
                     ),
@@ -388,7 +450,7 @@ class _ProfilePageState extends State<ProfilePage> {
       isDismissible: false,
       backgroundColor: Colors.transparent,
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(20),
             topLeft: Radius.circular(20),
@@ -396,25 +458,24 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       builder: ((context){
         return Container(
-            padding: EdgeInsets.symmetric(vertical: 30),
+            padding: const EdgeInsets.symmetric(vertical: 30),
             height: 450,
             decoration: BoxDecoration(
               color: Get.isDarkMode ? Colors.white : Colors.grey,
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.only(topRight:Radius.circular(50),topLeft: Radius.circular(50)),
             ),
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Container(
-                    padding:  EdgeInsets.all(5),
+                    padding:  const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color:Get.isDarkMode?Colors.grey:Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(15),
-                      // border: Border.all(color: Colors.orange)
                     ),
                     child: CheckboxListTile(
-                      checkboxShape: CircleBorder(),
+                      checkboxShape: const CircleBorder(),
                       title: Text('O\'qituvchi', style: TextStyle(
                         color: Get.isDarkMode?Colors.black:Colors.black,
                       ),),
@@ -444,7 +505,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child:  CheckboxListTile(
-                      checkboxShape: CircleBorder(),
+                      checkboxShape: const CircleBorder(),
                       title:  Text('Talaba', style: TextStyle(
                         color: Get.isDarkMode?Colors.black:Colors.black,
                       ),),
@@ -474,7 +535,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child:  CheckboxListTile(
-                      checkboxShape: CircleBorder(),
+                      checkboxShape: const CircleBorder(),
                       title:  Text('O\'quvchi',style: TextStyle(
                         color: Get.isDarkMode?Colors.black:Colors.black,
                       ),),
@@ -500,7 +561,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ElevatedButton(
                       onPressed: ()  {
                       },
-                      child:Text("Saqlash"),
+                      child:const Text("Saqlash"),
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.orange)),
                     ),
@@ -515,81 +576,131 @@ class _ProfilePageState extends State<ProfilePage> {
   }
   Future changePassword() {
     return showModalBottomSheet(
+        isDismissible: false,
+        backgroundColor: Colors.transparent,
         context: context,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: new Icon(Icons.photo),
-                title: new Text('Photo'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+        shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+        topRight: Radius.circular(20),
+    topLeft: Radius.circular(20),
+    )
+    ),
+    builder: ((context){
+          return Container(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              height: 450,
+              decoration: BoxDecoration(
+                color: Get.isDarkMode ? Colors.white : Colors.grey,
+                borderRadius: BorderRadius.only(topRight:Radius.circular(50),topLeft: Radius.circular(50)),
               ),
-              ListTile(
-                leading: new Icon(Icons.music_note),
-                title: new Text('Music'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: new Icon(Icons.videocam),
-                title: new Text('Video'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: new Icon(Icons.share),
-                title: new Text('Share'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Container(
+                      padding:  const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color:Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: CheckboxListTile(
+                        checkboxShape: const CircleBorder(),
+                        title: Text('O\'qituvchi', style: TextStyle(
+                          color: Get.isDarkMode?Colors.black:Colors.black,
+                        ),),
+                        secondary:  Icon(Icons.person,size: 23, color:Get.isDarkMode?Colors.black:Colors.black),
+                        autofocus: false,
+                        activeColor: Colors.orange,
+                        checkColor: Colors.white,
+                        selected: us,
+                        value: us,
+                        onChanged: (val){
+                          setState(() {
+                            us=val!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Container(
+                      padding:  const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child:  CheckboxListTile(
+                        checkboxShape: const CircleBorder(),
+                        title:  Text('Talaba', style: TextStyle(
+                          color: Get.isDarkMode?Colors.black:Colors.black,
+                        ),),
+                        secondary:  Icon(Icons.person,size: 23,color:Get.isDarkMode?Colors.black:Colors.black),
+                        autofocus: false,
+                        activeColor: Colors.black,
+                        checkColor: Colors.white,
+                        selected: tal,
+                        value: tal,
+                        onChanged: (val){
+                          setState(() {
+                            tal=val!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child:  CheckboxListTile(
+                        checkboxShape: const CircleBorder(),
+                        title:  Text('O\'quvchi',style: TextStyle(
+                          color: Get.isDarkMode?Colors.black:Colors.black,
+                        ),),
+                        secondary:  Icon(Icons.person,size: 23,color: Get.isDarkMode?Colors.black:Colors.black),
+                        autofocus: false,
+                        activeColor: Colors.black,
+                        checkColor: Colors.white,
+                        selected: bol,
+                        value: bol,
+                        onChanged: (val){
+                          setState(() {
+                            bol=val!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: ()  {
+                        },
+                        child:const Text("Saqlash"),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.orange)),
+                      ),
+                      const SizedBox(width: 30,)
+                    ],
+                  )
+                ],
+              )
           );
-        });
-  }
-  Future logout() {
-    return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: new Icon(Icons.photo),
-                title: new Text('Photo'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: new Icon(Icons.music_note),
-                title: new Text('Music'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: new Icon(Icons.videocam),
-                title: new Text('Video'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: new Icon(Icons.share),
-                title: new Text('Share'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
+        }));
   }
 
 }
