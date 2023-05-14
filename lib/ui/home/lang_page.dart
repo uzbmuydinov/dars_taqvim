@@ -1,6 +1,10 @@
 import 'package:app/ui/home/register_page.dart';
+import 'package:app/ui/home/sign_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../models/user_model.dart';
+import '../../services/hive_db_service.dart';
 
 class LangPage extends StatefulWidget {
   const LangPage({Key? key}) : super(key: key);
@@ -144,7 +148,13 @@ class _LangPageState extends State<LangPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
                     onTap: (){
-                      Get.to(const RegisterPage());
+                      List<UserModel> user = [];
+                      user =  HiveService.readUsers();
+                      if(user.isNotEmpty){
+                        Get.to(const SignInPage());
+                      }else{
+                        Get.to(const RegisterPage());
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.all(17),

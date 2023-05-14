@@ -1,17 +1,11 @@
-import 'package:app/controller/task_controller.dart';
-import 'package:app/models/task_model.dart';
+import 'package:app/app_controller/home_controller.dart';
+import 'package:app/models/teacher_model.dart';
 import 'package:app/services/notification_services.dart';
 import 'package:app/services/theme_service.dart';
-import 'package:app/ui/add_task_bar.dart';
-import 'package:app/ui/theme.dart';
-import 'package:app/ui/widgets/button.dart';
-import 'package:app/ui/widgets/task_tile.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
+
+import '../widgets/home_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomeController homeController = Get.find<HomeController>();
+
   var notifyHelper;
 
   @override
@@ -29,6 +25,7 @@ class _HomePageState extends State<HomePage> {
     notifyHelper = NotifyHelper();
     notifyHelper.requestIOSPermissions();
     notifyHelper.initializeNotification();
+    homeController.getAllScience();
   }
 
   @override
@@ -36,7 +33,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
-      body: _bodyBar(),
+      body: Stack(
+        children: [
+          _bodyBar(),
+          Visibility(
+            visible: homeController.isLoading,
+            child: const Center(
+                child: CircularProgressIndicator(
+              color: Colors.white,
+            )),
+          )
+        ],
+      ),
     );
   }
 
@@ -54,18 +62,20 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   "Salom",
                   style: TextStyle(
-                      color: Get.isDarkMode?Colors.white:Colors.black,
+                      color: Get.isDarkMode ? Colors.white : Colors.black,
                       fontSize: 15,
                       fontWeight: FontWeight.w600),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 )
               ],
             ),
             Text(
               "Qandaharov Alisher",
-              style: TextStyle(color: Get.isDarkMode?Colors.white:Colors.black, fontSize: 20),
+              style: TextStyle(
+                  color: Get.isDarkMode ? Colors.white : Colors.black,
+                  fontSize: 20),
             ),
           ],
         ),
@@ -87,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 body: Get.isDarkMode
                     ? "Activated Light Theme"
                     : "Activated Dark Theme");
-            notifyHelper.scheduledNotification();
+            notifyHelper.scheduledNotification;
           },
           icon: Padding(
             padding: const EdgeInsets.only(right: 30, top: 20),
@@ -101,41 +111,49 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
   _bodyBar() {
-    return SafeArea(
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: context.theme.backgroundColor,
+      ),
+      padding: const EdgeInsets.only(top: 60, left: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(color: context.theme.backgroundColor,
+        children: [
+          Text(
+            "Sizning jadvalingiz",
+            style: TextStyle(
+                color: Get.isDarkMode ? Colors.white : Colors.black,
+                fontSize: 27,
+                fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            "Kelgusi darslar va vazifalar",
+            style: TextStyle(
+                color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 20),
+          ),
+          const SizedBox(height: 60),
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: homeController.science.length,
+              itemBuilder: (context, index) {
+                Data info = homeController.science[index];
+                return HomeWidget(
+                  startTime: info.startTime.toString(),
+                  fan: info.science.toString(),
+                  sinf: info.classRoom.toString(),
+                  note: info.note!,
+                  onChanged: () {},
+                );
+              },
             ),
-            padding: const EdgeInsets.only(top: 60, left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
-                Text(
-                  "Sizning jadvalingiz",
-                  style: TextStyle(
-                      color: Get.isDarkMode ? Colors.white:Colors.black,
-                      fontSize: 27,
-                      fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  "Kelgusi darslar va vazifalar",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20),
-                ),
-                SizedBox(height: 60,),
-                Text("dfgdfgfdgdf0"),
-              ],
-            ),
-          )
+          ),
         ],
       ),
     );

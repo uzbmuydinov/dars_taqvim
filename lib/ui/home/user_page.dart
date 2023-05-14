@@ -15,6 +15,7 @@ class _UserPageState extends State<UserPage> {
   bool us=false;
   bool tal=false;
   bool bol=false;
+  String? role;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +85,7 @@ class _UserPageState extends State<UserPage> {
                     onChanged: (val){
                       setState(() {
                         us=val!;
+                        role = "TEACHER";
                       });
                     },
                   ),
@@ -114,6 +116,7 @@ class _UserPageState extends State<UserPage> {
                     onChanged: (val){
                       setState(() {
                         tal=val!;
+                        role = "STUDENT";
                       });
                     },
                   ),
@@ -144,6 +147,7 @@ class _UserPageState extends State<UserPage> {
                     onChanged: (val){
                       setState(() {
                         bol=val!;
+                        role = "CHILDREN";
                       });
                     },
                   ),
@@ -156,7 +160,12 @@ class _UserPageState extends State<UserPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
                     onTap: (){
-                      Get.to( NavigationPage());
+                      if(role!.isNotEmpty){
+                        Get.to( NavigationPage(rule: role!,));
+                      }else{
+
+                      }
+
                     },
                     child: Container(
                       padding: const EdgeInsets.all(17),

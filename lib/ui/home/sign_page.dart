@@ -1,6 +1,10 @@
 import 'package:app/ui/home/register_page.dart';
+import 'package:app/ui/profile/table_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../app_controller/sign_in_controller.dart';
+import 'user_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -10,6 +14,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+
+  final SignInController signInController = Get.find<SignInController>();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -66,6 +72,7 @@ class _SignInPageState extends State<SignInPage> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: TextField(
+                    controller: signInController.numberController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       prefixIcon: Icon(
@@ -93,6 +100,7 @@ class _SignInPageState extends State<SignInPage> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: TextField(
+                    controller: signInController.passwordController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       prefixIcon: Icon(
@@ -114,9 +122,7 @@ class _SignInPageState extends State<SignInPage> {
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
-                    onTap: (){
-                      Get.to(const RegisterPage());
-                    },
+                    onTap:signInController.changeRegister,
                     child: Container(
                       padding: const EdgeInsets.all(17),
                       decoration: BoxDecoration(
@@ -133,7 +139,19 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ),
                     ),
-                  )),
+                  ),
+              ),
+              const SizedBox(height: 15),
+              Center(
+                  child: GestureDetector(
+                    onTap: (){
+                      Get.off(()=>const RegisterPage());
+                    },
+                    child: const Text(
+                      "Hisob yaratish",
+                      style: TextStyle(color: Colors.red, fontSize: 18,fontWeight: FontWeight.w400),
+                    ),
+                  ))
             ],
           ),
         ),

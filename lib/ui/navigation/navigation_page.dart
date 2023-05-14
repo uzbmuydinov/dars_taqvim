@@ -10,7 +10,8 @@ import 'package:get/get.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class NavigationPage extends StatelessWidget {
-  NavigationPage({Key? key}) : super(key: key);
+  final String rule;
+  NavigationPage({Key? key, required this.rule}) : super(key: key);
 
   final NavigationPageController controller =
       Get.put(NavigationPageController());
@@ -21,11 +22,11 @@ class NavigationPage extends StatelessWidget {
         body: PageView(
           onPageChanged: controller.animateToTab,
           controller: controller.pageController,
-          children: const [
-            HomePage(),
-            TablePage(),
-            PlanningPage(),
-            ProfilePage(),
+          children:  [
+            const HomePage(),
+            TablePage(rule: rule,),
+            const PlanningPage(),
+            const ProfilePage(),
           ],
         ),
         bottomNavigationBar: BottomAppBar(

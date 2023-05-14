@@ -1,5 +1,5 @@
 import 'package:app/app_controller/add_task_controller.dart';
-import 'package:app/controller/task_controller.dart';
+import 'package:app/app_controller/task_controller.dart';
 import 'package:app/models/task_model.dart';
 import 'package:app/ui/theme.dart';
 import 'package:app/ui/widgets/input_field.dart';
@@ -9,8 +9,9 @@ import 'package:intl/intl.dart';
 
 class AddTaskBarPage extends StatefulWidget {
   final int week;
+  final String role;
 
-  const AddTaskBarPage({Key? key,required this.week}) : super(key: key);
+  const AddTaskBarPage({Key? key,required this.week, required this.role}) : super(key: key);
 
   @override
   State<AddTaskBarPage> createState() => _AddTaskBarPageState();
@@ -46,8 +47,10 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
                 style: headingStyle,
               ),
                MyInputField(title: "Fan", hint: "Fan",controller: addTaskController.scienceController,),
-               MyInputField(
-                  title: "O'qituvchi ismi", hint: "O'qituvchi ismi",controller: addTaskController.teacherNameController,),
+             widget.role == 'TEACHER' ?  MyInputField(
+                  title: "Sinf", hint: "Sinf",controller: addTaskController.teacherORClassRoomController,)
+              : MyInputField(
+               title: "O'qituvchi ismi", hint: "O'qituvchi ismi",controller: addTaskController.teacherORClassRoomController,),
               MyInputField(
                 title: "Xabar vaqti",
                 hint: DateFormat.yMd().format(_selectedDate),
@@ -112,7 +115,10 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
                             title: Text("Eslatma",style: TextStyle(fontSize: 16,color: Colors.grey.shade500,fontWeight: FontWeight.w800),),
                             trailing: Switch(
                               onChanged: (value){
-                                isSelected=!isSelected;
+                                setState(() {
+                                  isSelected=!isSelected;
+                                });
+
                               },
                               value: isSelected,
                               activeColor: Colors.green,
@@ -126,7 +132,7 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
                  ElevatedButton(
                             onPressed: ()  {
                               _validateDate();
-                              addTaskController.addTaskNetwork(widget.week);
+                              addTaskController.addTaskNetwork(widget.week, widget.role);
                             },
                             child: Text("Saqlash"),
                             style: ButtonStyle(
@@ -158,10 +164,10 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
   }
   
   _validateDate(){
-    if(addTaskController.scienceController.text.isNotEmpty&&addTaskController.teacherNameController.text.isNotEmpty){
+    if(addTaskController.scienceController.text.isNotEmpty&&addTaskController.teacherORClassRoomController.text.isNotEmpty){
       _addTaskToDb();
       Get.back();
-    }else if(addTaskController.scienceController.text.isEmpty||addTaskController.teacherNameController.text.isEmpty){
+    }else if(addTaskController.scienceController.text.isEmpty||addTaskController.teacherORClassRoomController.text.isEmpty){
       Get.snackbar("Talab qilinadi", "Hamma maydon talab qilinadi !",
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
@@ -171,7 +177,7 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
   _addTaskToDb()async {
     int value =await _taskController.addTask(
         task:Task(
-          note: addTaskController.teacherNameController.text,
+          note: addTaskController.teacherORClassRoomController.text,
           title:addTaskController.scienceController.text,
           date:DateFormat.yMd().format(addTaskController.selectedDate),
           startTime:addTaskController.startTimeController.text,
@@ -246,7 +252,10 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
       setState(() {
         addTaskController.selectedDate = _pickerDate;
         String sdatetime = addTaskController.selectedDate.toString();
+
         DateTime sdate = DateTime.parse(sdatetime);
+        debugPrint('vvvvvvvvvv>${sdatetime.substring(0, 13)}');
+
         addTaskController.stimestamp = sdate.microsecondsSinceEpoch;
 
       });

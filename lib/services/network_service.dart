@@ -28,7 +28,7 @@ class NetworkService {
   static Map<String, String> headers = {
     'Content-Type': 'application/json; charset=UTF-8',
     'Authorization':
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImlhdCI6MTY4MzcxMzMyMCwiZXhwIjoxNjg0MzE4MTIwfQ.ogjKWUL2pr_ra_dzbKgxL1fYfy6NrKt2Kb-dpO8wItQ',
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzOCIsImlhdCI6MTY4NDA0NzA2OCwiZXhwIjoxNjg0NjUxODY4fQ.tYHtcmU8tuqHjzVLFlaBsMUiVg4jYemFmQxAkthpAvk',
   };
 
   // interceptor
@@ -37,8 +37,8 @@ class NetworkService {
   ]);
 
   //methods
-  static Future<String?> GET(String api, Map<String, String> params) async {
-    Uri url = Uri.https(BASEURL, api, params);
+  static Future<String?> GET(String api,  Map<String, String> params) async {
+    Uri url = Uri.http(BASEURL, api, params);
     final response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -112,6 +112,17 @@ class NetworkService {
     return map;
   }
 
+
+  static Map<String, dynamic> bodySignIn(
+      String phoneNumber, String password) {
+    Map<String, String> map =
+    {
+      "phoneNumber": phoneNumber,
+      "password": password
+    };
+    return map;
+  }
+
   static Map<String, String> bodyEmpty() {
     Map<String, String> map = {};
     return map;
@@ -134,6 +145,15 @@ class NetworkService {
       "role":addTaskModel.role.toString(),
       "week":addTaskModel.week.toString(),
       "note":addTaskModel.note.toString()
+    };
+    return map;
+  }
+
+  static Map<String, String> paramsScience(
+      {String? week, String? role}) {
+    Map<String, String> map = {
+      'week' : week.toString(),
+      'role' : role.toString(),
     };
     return map;
   }

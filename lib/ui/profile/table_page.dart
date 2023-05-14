@@ -1,10 +1,8 @@
-import 'package:app/controller/task_controller.dart';
+import 'package:app/app_controller/task_controller.dart';
 import 'package:app/models/task_model.dart';
 import 'package:app/services/notification_services.dart';
-import 'package:app/services/theme_service.dart';
 import 'package:app/ui/add_task_bar.dart';
 import 'package:app/ui/theme.dart';
-import 'package:app/ui/widgets/button.dart';
 import 'package:app/ui/widgets/task_tile.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +11,22 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../../app_controller/add_task_controller.dart';
+import '../../models/teacher_model.dart';
+import '../widgets/table_widget.dart';
+
 class TablePage extends StatefulWidget {
-  const TablePage({Key? key}) : super(key: key);
+  final String rule;
+
+  const TablePage({Key? key, required this.rule}) : super(key: key);
 
   @override
   State<TablePage> createState() => _TablePageState();
 }
 
 class _TablePageState extends State<TablePage> {
+  final AddTaskController addTaskController = Get.find<AddTaskController>();
+
   DateTime _selectedDate = DateTime.now();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
@@ -35,27 +41,78 @@ class _TablePageState extends State<TablePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 100),
-        child: Column(
-          children: [
-            _addTaskBar(),
-            _addDateBar(),
-            const SizedBox(
-              height: 10,
-            ),
-            _showTasks(),
-          ],
-        ),
-      ),
-    );
+    return GetBuilder<AddTaskController>(
+        init: AddTaskController(),
+        builder: (addTaskController) {
+          return Scaffold(
+              backgroundColor: context.theme.backgroundColor,
+              body: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 100),
+                    child: Column(
+                      children: [
+                        _addTaskBar(),
+                        _addDateBar(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _showTasks(),
+                        Expanded(
+                          child: addTaskController.science.isNotEmpty
+                              ? ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: addTaskController.science.length,
+                                  itemBuilder: (context, index) {
+                                    Data info =
+                                        addTaskController.science[index];
+                                    int ts = info.noteTime!;
+                                    DateTime tsdate =
+                                        DateTime.fromMillisecondsSinceEpoch(ts);
+                                    String datetime = tsdate.year.toString() +
+                                        "/" +
+                                        tsdate.month.toString() +
+                                        "/" +
+                                        tsdate.day.toString();
+                                    print(datetime);
+                                    return TableWidget(
+                                      startTime: datetime,
+                                      fan: info.science.toString(),
+                                      sinf: info.classRoom.toString(),
+                                      note: info.note!,
+                                      onChanged: () {},
+                                    );
+                                  },
+                                )
+                              :  Center(
+                                  child: Text(
+                                  'Bu kun uchun vazifalar mavjud emas',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Get.isDarkMode?Colors.grey.shade400:Colors.grey.shade600,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 25),
+                                )),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: addTaskController.isLoading,
+                    child: const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.red,
+                    )),
+                  )
+                ],
+              ));
+        });
   }
 
   _showTasks() {
-    return Expanded(child: Obx(() {
+    return Obx(() {
       return ListView.builder(
+          shrinkWrap: true,
           itemCount: _taskController.taskList.length,
           itemBuilder: (_, index) {
             Task task = _taskController.taskList[index];
@@ -102,7 +159,7 @@ class _TablePageState extends State<TablePage> {
               return Container();
             }
           });
-    }));
+    });
   }
 
   _showBottomSheet(BuildContext context, Task task) {
@@ -226,12 +283,14 @@ class _TablePageState extends State<TablePage> {
         onDateChange: (date) {
           setState(() {
             _selectedDate = date;
-
+            debugPrint('hhhhhhhhhhhhhh${_selectedDate.weekday}');
+            addTaskController.getDeyTask(_selectedDate.weekday, widget.rule);
           });
         },
       ),
     );
   }
+
   _addTaskBar() {
     return Container(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -252,9 +311,12 @@ class _TablePageState extends State<TablePage> {
           ),
           ElevatedButton(
             onPressed: () async {
-              await Get.to(  AddTaskBarPage(week: _selectedDate.day));
+              await Get.to(AddTaskBarPage(
+                week: _selectedDate.weekday,
+                role: widget.rule,
+              ));
             },
-            child:  Text("+ Add Task"),
+            child: Text("+ Add Task"),
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.orange)),
           ),

@@ -1,4 +1,4 @@
-import 'package:app/controller/task_controller.dart';
+import 'package:app/app_controller/task_controller.dart';
 import 'package:app/models/task_model.dart';
 import 'package:app/services/notification_services.dart';
 import 'package:app/services/theme_service.dart';
@@ -251,7 +251,7 @@ class _PlanningPageState extends State<PlanningPage> {
           ),
           ElevatedButton(
             onPressed: () async {
-              await Get.to( const AddTaskBarPage(week: 1,));
+              await Get.to(  AddTaskBarPage(week: 1, role: 'role',));
             },
             child:Text("+ Add Task"),
             style: ButtonStyle(
