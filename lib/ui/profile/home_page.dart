@@ -30,28 +30,33 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
-      appBar: _appBar(),
-      body: Stack(
-        children: [
-          _bodyBar(),
-          Visibility(
-            visible: homeController.isLoading,
-            child: const Center(
-                child: CircularProgressIndicator(
-              color: Colors.white,
-            )),
-          )
-        ],
-      ),
-    );
+    return GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (homeController) {
+          return Scaffold(
+            backgroundColor: context.theme.backgroundColor,
+            appBar: _appBar(),
+            body: Stack(
+              children: [
+                _bodyBar(),
+                Visibility(
+                  visible: homeController.isLoading,
+                  child: const Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.white,
+                  )),
+                )
+              ],
+            ),
+          );
+        });
   }
 
   _appBar() {
     return AppBar(
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,
+
       title: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                   fontSize: 20),
             ),
+
           ],
         ),
       ),
@@ -99,13 +105,10 @@ class _HomePageState extends State<HomePage> {
                     : "Activated Dark Theme");
             notifyHelper.scheduledNotification;
           },
-          icon: Padding(
-            padding: const EdgeInsets.only(right: 30, top: 20),
-            child: Icon(
-              Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
-              size: 27,
-              color: Get.isDarkMode ? Colors.orange : Colors.black,
-            ),
+          icon: Icon(
+            Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
+            size: 27,
+            color: Get.isDarkMode ? Colors.orange : Colors.black,
           ),
         ),
       ],
@@ -137,7 +140,7 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(
                 color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 20),
           ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 25),
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,

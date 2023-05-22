@@ -45,67 +45,63 @@ class _TablePageState extends State<TablePage> {
         init: AddTaskController(),
         builder: (addTaskController) {
           return Scaffold(
-              backgroundColor: context.theme.backgroundColor,
-              body: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: Column(
-                      children: [
-                        _addTaskBar(),
-                        _addDateBar(),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        _showTasks(),
-                        Expanded(
-                          child: addTaskController.science.isNotEmpty
-                              ? ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: addTaskController.science.length,
-                                  itemBuilder: (context, index) {
-                                    Data info =
-                                        addTaskController.science[index];
-                                    int ts = info.noteTime!;
-                                    DateTime tsdate =
-                                        DateTime.fromMillisecondsSinceEpoch(ts);
-                                    String datetime = tsdate.year.toString() +
-                                        "/" +
-                                        tsdate.month.toString() +
-                                        "/" +
-                                        tsdate.day.toString();
-                                    print(datetime);
-                                    return TableWidget(
-                                      startTime: datetime,
-                                      fan: info.science.toString(),
-                                      sinf: info.classRoom.toString(),
-                                      note: info.note!,
-                                      onChanged: () {},
-                                    );
-                                  },
-                                )
-                              :  Center(
-                                  child: Text(
+            backgroundColor: context.theme.backgroundColor,
+            body:
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Column(
+                    children: [
+                      _addTaskBar(),
+                      _addDateBar(),
+                      const SizedBox(
+                        height: 1,
+                      ),
+                      SizedBox(width: 20,),
+                      // _showTasks(),
+                          Expanded(
+                            child: addTaskController.science.isNotEmpty
+                                ? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: addTaskController.science.length,
+                              itemBuilder: (context, index) {
+                                Data info =
+                                addTaskController.science[index];
+                                return TableWidget(
+                                  startTime: info.noteTime.toString(),
+                                  fan: info.science.toString(),
+                                  sinf: info.classRoom.toString(),
+                                  note: info.note!,
+                                  onChanged: () {},
+                                );
+                              },
+                            )
+                                : Center(
+                                child: Text(
                                   'Bu kun uchun vazifalar mavjud emas',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      color: Get.isDarkMode?Colors.grey.shade400:Colors.grey.shade600,
+                                      color: Get.isDarkMode
+                                          ? Colors.grey.shade400
+                                          : Colors.grey.shade600,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 25),
                                 )),
-                        ),
-                      ],
-                    ),
+                          ),
+                    ],
                   ),
-                  Visibility(
-                    visible: addTaskController.isLoading,
-                    child: const Center(
-                        child: CircularProgressIndicator(
-                      color: Colors.red,
-                    )),
-                  )
-                ],
-              ));
+                ),
+                Visibility(
+                  visible: addTaskController.isLoading,
+                  child: const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.red,
+                      )),
+                )],
+
+             ),
+          );
         });
   }
 
@@ -168,7 +164,7 @@ class _TablePageState extends State<TablePage> {
       height: task.isCompleted == 1
           ? MediaQuery.of(context).size.height * 0.24
           : MediaQuery.of(context).size.height * 0.32,
-      color: Get.isDarkMode ? darkGreyClr : Colors.white,
+      color: Get.isDarkMode ? const Color(0xFF424242): Colors.white,
       child: Column(
         children: [
           Container(
@@ -188,7 +184,7 @@ class _TablePageState extends State<TablePage> {
                     _taskController.markTaskCompleted(task.id!);
                     Get.back();
                   },
-                  clr: primaryClr,
+                  clr: const Color(0xFF4e5ae8),
                   context: context,
                 ),
           _bottomSheetButton(
@@ -266,7 +262,7 @@ class _TablePageState extends State<TablePage> {
         height: 100,
         width: 80,
         initialSelectedDate: DateTime.now(),
-        selectedTextColor: bluishClrw,
+        selectedTextColor: Colors.orange,
         selectionColor: Colors.orange.shade100,
         dateTextStyle: GoogleFonts.lato(
           textStyle: const TextStyle(
@@ -293,9 +289,12 @@ class _TablePageState extends State<TablePage> {
 
   _addTaskBar() {
     return Container(
-        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+        margin: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+        ),
         child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

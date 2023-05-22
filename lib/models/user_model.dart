@@ -19,14 +19,14 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    success: json["success"],
-    data: Data.fromJson(json["data"]),
-  );
+        success: json["success"],
+        data: Data.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "data": data.toJson(),
-  };
+        "success": success,
+        "data": data.toJson(),
+      };
 }
 
 class Data {
@@ -43,16 +43,16 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    phoneNumber: json["phoneNumber"],
-  );
+        id: json["id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        phoneNumber: json["phoneNumber"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "firstName": firstName,
-    "lastName": lastName,
-    "phoneNumber": phoneNumber,
-  };
+        "id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "phoneNumber": phoneNumber,
+      };
 }

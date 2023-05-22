@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 
-
 class TableWidget extends StatelessWidget {
   final String fan;
   final String sinf;
@@ -9,7 +8,14 @@ class TableWidget extends StatelessWidget {
   final bool note;
   final VoidCallback onChanged;
 
-  const TableWidget({Key? key, required this.startTime, required this.fan, required this.sinf, required this.note, required this.onChanged}) : super(key: key);
+  const TableWidget(
+      {Key? key,
+      required this.startTime,
+      required this.fan,
+      required this.sinf,
+      required this.note,
+      required this.onChanged})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +24,8 @@ class TableWidget extends StatelessWidget {
       margin: const EdgeInsets.only(right: 20, bottom: 15, left: 20),
       decoration: BoxDecoration(
           color: const Color(0xff8085FD),
-          borderRadius: BorderRadius.circular(15)
-      ),
-      height: 144,
+          borderRadius: BorderRadius.circular(15)),
+      height: 155,
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,37 +36,68 @@ class TableWidget extends StatelessWidget {
             children: [
               SizedBox(
                 width: 300,
-                height: 40,
-                child: fan.length < 20 ?
-                Text(fan, style: const TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w600),)
-                    :
-                Marquee(
-                  text: fan,
-                  style: const TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w600),
-                  blankSpace: 30,
-                  velocity: 40,
-                  accelerationCurve: Curves.bounceOut,
-                  decelerationCurve: Curves.bounceIn,
-                  showFadingOnlyWhenScrolling: false,
-                  pauseAfterRound: const Duration(seconds: 3),
-                ),
+                height: 30,
+                child: fan.length < 20
+                    ? Text(
+                        fan,
+                        style: const TextStyle(
+                            fontSize: 32,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
+                      )
+                    : Marquee(
+                        text: fan,
+                        style: const TextStyle(
+                            fontSize: 32,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
+                        blankSpace: 30,
+                        velocity: 40,
+                        accelerationCurve: Curves.bounceOut,
+                        decelerationCurve: Curves.bounceIn,
+                        showFadingOnlyWhenScrolling: false,
+                        pauseAfterRound: const Duration(seconds: 3),
+                      ),
               ),
-
               Switch(
-                onChanged: (value){
-
-                },
+                onChanged: (bool value) {},
                 value: note,
                 activeColor: Colors.white,
               ),
             ],
           ),
-          Text(sinf, style: const TextStyle(fontSize: 16, color: Colors.white),),
-
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            sinf,
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
           Row(
             children: [
-              const Icon(Icons.access_time_rounded, color: Colors.white),
-              Text(startTime, style: const TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w500),)
+              const Icon(
+                Icons.access_time_filled_rounded,
+                color: Colors.white,
+                size: 27,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                startTime,
+                style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 70, bottom: 20),
+                child: Icon(
+                  Icons.edit,
+                  size: 40,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
         ],

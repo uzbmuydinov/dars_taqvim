@@ -5,16 +5,11 @@ import 'package:app/ui/profile/table_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
-
 class NavigationPageController extends GetxController {
   late PageController pageController;
 
   RxInt currentPage = 0.obs;
   RxBool isDarkTheme = false.obs;
-
-
 
   void switchTheme(ThemeMode mode) {
     Get.changeThemeMode(mode);
@@ -24,11 +19,11 @@ class NavigationPageController extends GetxController {
     currentPage.value = page;
     pageController.jumpToPage(page);
   }
+
   void animateToTab(int page) {
     currentPage.value = page;
     pageController.animateToPage(page,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.ease);
+        duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }
 
   @override

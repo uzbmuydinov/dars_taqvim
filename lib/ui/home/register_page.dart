@@ -12,21 +12,19 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
-
   final RegisterController registerController = Get.find<RegisterController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Get.theme.backgroundColor,
+      backgroundColor: Get.theme.backgroundColor,
       appBar: AppBar(
-        backgroundColor:Get.theme.backgroundColor,
+        backgroundColor: Get.theme.backgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon:  Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color:Get.isDarkMode?Colors.white:Colors.black,
+            color: Get.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Get.back();
@@ -44,8 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(top: 50),
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(
-                      ),
+                      decoration: const BoxDecoration(),
                       padding: const EdgeInsets.all(20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +50,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           Text(
                             "Ma'lumotingizni\nkiriting!",
                             style: TextStyle(
-                                color: Get.isDarkMode?Colors.white:Colors.black,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.black,
                                 fontSize: 29,
                                 fontWeight: FontWeight.w700),
                           )
@@ -69,20 +68,21 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                        color:
+                            Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child:  TextField(
+                      child: TextField(
+                        autofocus: true,
                         controller: registerController.surnameController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          prefixIcon:Icon(
-                            Icons.person,
-                              color: Get.isDarkMode?Colors.black:Colors.black
-                          ),
+                          prefixIcon: Icon(Icons.person,
+                              color:
+                                  Get.isDarkMode ? Colors.black : Colors.black),
                           hintText: "Familya",
                           hintStyle: TextStyle(
-                           color: Get.isDarkMode?Colors.black:Colors.black,
+                            color: Get.isDarkMode ? Colors.black : Colors.black,
                             fontSize: 15,
                           ),
                         ),
@@ -97,20 +97,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                        color:
+                            Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child:  TextField(
+                      child: TextField(
                         controller: registerController.nameController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.phone_outlined,
-                              color: Get.isDarkMode?Colors.black:Colors.black
-                          ),
+                          prefixIcon: Icon(Icons.phone_outlined,
+                              color:
+                                  Get.isDarkMode ? Colors.black : Colors.black),
                           hintText: "Ism",
                           hintStyle: TextStyle(
-                            color: Get.isDarkMode?Colors.black:Colors.black,
+                            color: Get.isDarkMode ? Colors.black : Colors.black,
                             fontSize: 15,
                           ),
                         ),
@@ -125,46 +125,48 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                        color:
+                            Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child:  TextField(
+                      child: TextField(
                         controller: registerController.numberController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          prefixIcon: Icon(
-                              Icons.phone_outlined,
-                              color: Get.isDarkMode?Colors.black:Colors.black
-                          ),
-                          hintText: "Telefon raqam",
+                          prefixIcon: Icon(Icons.phone_outlined,
+                              color:
+                                  Get.isDarkMode ? Colors.black : Colors.black),
+                         hintText: ("Telefon number"),
                           hintStyle: TextStyle(
-                            color: Get.isDarkMode?Colors.black:Colors.black,
+                            color: Get.isDarkMode ? Colors.black : Colors.black,
                             fontSize: 15,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                        color:
+                            Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child:  TextField(
+                      child: TextField(
                         controller: registerController.passwordController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.lock,
-                              color: Get.isDarkMode?Colors.black:Colors.black
-                          ),
+                          prefixIcon: Icon(Icons.lock,
+                              color:
+                                  Get.isDarkMode ? Colors.black : Colors.black),
                           hintText: "Parol",
                           hintStyle: TextStyle(
-                            color: Get.isDarkMode?Colors.black:Colors.black,
+                            color: Get.isDarkMode ? Colors.black : Colors.black,
                             fontSize: 15,
                           ),
                         ),
@@ -177,9 +179,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: GestureDetector(
-                        onTap:  registerController.postData,
+                        onTap: registerController.postData,
 
-                         // Get.to(const UserPage());
+                        // Get.to(const UserPage());
 
                         child: Container(
                           padding: const EdgeInsets.all(17),
@@ -187,10 +189,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.orange.withOpacity(1.0),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              "Davom etish",
-                              style: TextStyle(
+                              "Davom etish".tr,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
@@ -201,24 +203,27 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Center(
+                  Center(
                       child: GestureDetector(
-                        onTap: (){
-                          Get.to(const SignInPage());
-                        },
-                        child: const Text(
-                    "Hisobga kiring",
-                    style: TextStyle(color: Colors.red, fontSize: 18,fontWeight: FontWeight.w400),
-                  ),
-                      ))
+                    onTap: () {
+                      Get.to(const SignInPage());
+                    },
+                    child: Text(
+                      "Hisobga kiring".tr,
+                      style: const TextStyle(
+                        color: Colors.orange,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ))
                 ],
               ),
             ),
           ),
           Visibility(
               visible: registerController.isLoading,
-              child: const Center(child:  RefreshProgressIndicator())
-          )
+              child: const Center(child: RefreshProgressIndicator()))
         ],
       ),
     );

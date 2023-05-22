@@ -11,6 +11,7 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class NavigationPage extends StatelessWidget {
   final String rule;
+
   NavigationPage({Key? key, required this.rule}) : super(key: key);
 
   final NavigationPageController controller =
@@ -22,10 +23,14 @@ class NavigationPage extends StatelessWidget {
         body: PageView(
           onPageChanged: controller.animateToTab,
           controller: controller.pageController,
-          children:  [
+          children: [
             const HomePage(),
-            TablePage(rule: rule,),
-            const PlanningPage(),
+            TablePage(
+              rule: rule,
+            ),
+            PlanningPage(
+              rule: rule,
+            ),
             const ProfilePage(),
           ],
         ),
@@ -69,14 +74,14 @@ class NavigationPage extends StatelessWidget {
             Icon(
               icon,
               color: controller.currentPage.value == page
-                  ? appColors
+                  ? const Color(0xFFFFB746)
                   : Colors.grey,
             ),
             Text(
               label,
               style: TextStyle(
                   color: controller.currentPage.value == page
-                      ? appColors
+                      ? const Color(0xFFFFB746)
                       : Colors.grey,
                   fontSize: 13,
                   fontWeight: controller.currentPage.value == page

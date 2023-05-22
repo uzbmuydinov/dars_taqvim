@@ -2,8 +2,8 @@ import 'package:app/models/task_model.dart';
 import 'package:sqflite/sqflite.dart';
 class DBHelper{
   static Database?_db;
-  static final int _version=1;
-  static final String _tableName="tasks";
+  static const int _version=1;
+  static const String _tableName="tasks";
 
 
   static Future<void>initDb()async{
@@ -11,7 +11,7 @@ class DBHelper{
       return;
     }
     try{
-      String _path=await getDatabasesPath()+'tasks.db';
+      String _path='${await getDatabasesPath()}tasks.db';
       _db=await openDatabase(
           _path,
           version:_version,
@@ -43,7 +43,7 @@ class DBHelper{
   }
 
   static delete(Task task)async{
-     return await _db?.delete(_tableName,where: "id=?",whereArgs: [task.id]);
+    return await _db?.delete(_tableName,where: "id=?",whereArgs: [task.id]);
   }
   static update(int id)async{
     return await _db?.rawUpdate('''

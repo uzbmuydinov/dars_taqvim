@@ -1,8 +1,7 @@
-class Auth{
+class Auth {
   late int id;
   late String muassasa;
   late String password;
-
 
   Auth(this.id, this.muassasa, this.password);
 
@@ -10,15 +9,13 @@ class Auth{
     id = json["id"];
     muassasa = json["muassasa"];
     password = json["password"];
-
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "muassasa": muassasa,
-    "password": password,
-
-  };
+        "id": id,
+        "muassasa": muassasa,
+        "password": password,
+      };
 
   @override
   String toString() {
@@ -26,7 +23,7 @@ class Auth{
   }
 
   @override
-  bool operator == (Object other) {
+  bool operator ==(Object other) {
     return other is Auth && other.id == id;
   }
 

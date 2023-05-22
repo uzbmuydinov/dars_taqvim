@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 import '../app_controller/add_task_controller.dart';
 import '../app_controller/home_controller.dart';
+import '../app_controller/planning_controller.dart';
+import '../app_controller/profile_controller.dart';
 import '../app_controller/sign_in_controller.dart';
 
 class DIService {
@@ -11,5 +13,8 @@ class DIService {
     Get.lazyPut<AddTaskController>(() => AddTaskController(), fenix: true);
     Get.lazyPut<SignInController>(() => SignInController(), fenix: true);
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
+    Get.lazyPut<PlanningTaskController>(() => PlanningTaskController(),
+        fenix: true);
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }

@@ -6,15 +6,15 @@ import 'package:get/get.dart';
 import '../models/teacher_model.dart';
 
 class AddTaskController extends GetxController {
-
   bool isLoading = false;
+  bool isSelected = false;
   List<Data> science = [];
 
   DateTime selectedDate = DateTime.now();
   DateTime selectedStartTime = DateTime.now();
-   int? stimestamp;
-   int? startTime;
-   int? endTime;
+  int? stimestamp;
+  int? startTime;
+  int? endTime;
   TextEditingController scienceController = TextEditingController();
   TextEditingController classController = TextEditingController();
   TextEditingController teacherORClassRoomController = TextEditingController();
@@ -22,9 +22,7 @@ class AddTaskController extends GetxController {
   TextEditingController startTimeController = TextEditingController();
   TextEditingController endTimeController = TextEditingController();
 
-
-
-  Future<void> addTaskNetwork(int week, String role) async{
+  Future<void> addTaskNetwork(int week, String role) async {
     isLoading = true;
     debugPrint('mmmmmmmmmmmmm>$week');
     update();
@@ -47,43 +45,38 @@ class AddTaskController extends GetxController {
 
     AddTaskModel addTaskModel;
 
-    if(role == 'TEACHER'){
-       addTaskModel = AddTaskModel(
+    if (role == 'TEACHER') {
+      addTaskModel = AddTaskModel(
           science: scienceController.text,
           classRoom: teacherORClassRoomController.text.trim(),
-          noteTime:  stimestamp,
+          noteTime: stimestamp,
           startTime: 12,
           endTime: 22,
           role: role,
           week: weekDay,
-          note: false
-      );
-    }else{
-      addTaskModel =  AddTaskModel(
+          note: isSelected);
+    } else {
+      addTaskModel = AddTaskModel(
           science: scienceController.text,
           name: teacherORClassRoomController.text.trim(),
-          noteTime:  stimestamp,
+          noteTime: stimestamp,
           startTime: 12,
           endTime: 22,
           role: role,
           week: weekDay,
-          note: false
-      );
+          note: isSelected);
     }
-
-
 
     final responce = await NetworkService.POST(
         NetworkService.apiAddTask, NetworkService.bodyAddTask(addTaskModel));
-    if(responce!=null){
+    if (responce != null) {
       debugPrint("====================================$responce");
     }
   }
 
-
   ///<Table Controller>
 
-  Future<void> getDeyTask(int week, String rule)async{
+  Future<void> getDeyTask(int week, String rule) async {
     isLoading = true;
     update();
 
@@ -104,17 +97,18 @@ class AddTaskController extends GetxController {
       weekDay = "SUNDAY";
     }
 
+    final response = await NetworkService.GET(
+        NetworkService.apiAddTask,
+        NetworkService.paramsScience(
+          week: weekDay,
+          role: rule,
+        ));
 
-    final response = await NetworkService.GET(NetworkService.apiAddTask, NetworkService.paramsScience(week: weekDay, role: rule,));
-
-    if(response != null){
+    if (response != null) {
       TeacherModel teacherModel = teacherModelFromJson(response);
       science = teacherModel.data!;
-
     }
     isLoading = false;
     update();
-
   }
-
 }

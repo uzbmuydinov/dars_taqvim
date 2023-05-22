@@ -11,22 +11,22 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-
-  bool us=false;
-  bool tal=false;
-  bool bol=false;
+  bool us = false;
+  bool tal = false;
+  bool bol = false;
   String? role;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Get.theme.backgroundColor,
+      backgroundColor: Get.theme.backgroundColor,
       appBar: AppBar(
-        backgroundColor:Get.theme.backgroundColor,
+        backgroundColor: Get.theme.backgroundColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-           color: Get.isDarkMode?Colors.white:Colors.black,
+            color: Get.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Get.back();
@@ -42,16 +42,15 @@ class _UserPageState extends State<UserPage> {
                 padding: const EdgeInsets.only(top: 50),
                 child: Container(
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                  ),
+                  decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children:  [
+                    children: [
                       Text(
                         "Pazitsiyani\ntanlang!",
                         style: TextStyle(
-                            color: Get.isDarkMode?Colors.white:Colors.black,
+                            color: Get.isDarkMode ? Colors.white : Colors.black,
                             fontSize: 34,
                             fontWeight: FontWeight.w700),
                       )
@@ -65,26 +64,31 @@ class _UserPageState extends State<UserPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Container(
-                  padding:  EdgeInsets.all(5),
+                  padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color:Get.isDarkMode?Colors.grey:Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(15),
-                      // border: Border.all(color: Colors.orange)
+                    color: Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(15),
+                    // border: Border.all(color: Colors.orange)
                   ),
                   child: CheckboxListTile(
                     checkboxShape: CircleBorder(),
-                    title: Text('O\'qituvchi', style: TextStyle(
-                        color: Get.isDarkMode?Colors.black:Colors.black,
-                    ),),
-                    secondary:  Icon(Icons.person,size: 23, color:Get.isDarkMode?Colors.black:Colors.black),
+                    title: Text(
+                      'O\'qituvchi',
+                      style: TextStyle(
+                        color: Get.isDarkMode ? Colors.black : Colors.black,
+                      ),
+                    ),
+                    secondary: Icon(Icons.person,
+                        size: 23,
+                        color: Get.isDarkMode ? Colors.black : Colors.black),
                     autofocus: false,
-                    activeColor: Colors.black,
+                    activeColor: Colors.orange,
                     checkColor: Colors.white,
                     selected: us,
                     value: us,
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() {
-                        us=val!;
+                        us = val!;
                         role = "TEACHER";
                       });
                     },
@@ -97,25 +101,30 @@ class _UserPageState extends State<UserPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Container(
-                  padding:  const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                      color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(15),
+                    color: Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  child:  CheckboxListTile(
+                  child: CheckboxListTile(
                     checkboxShape: CircleBorder(),
-                    title:  Text('Talaba', style: TextStyle(
-                        color: Get.isDarkMode?Colors.black:Colors.black,
-                    ),),
-                    secondary:  Icon(Icons.person,size: 23,color:Get.isDarkMode?Colors.black:Colors.black),
+                    title: Text(
+                      'Talaba',
+                      style: TextStyle(
+                        color: Get.isDarkMode ? Colors.black : Colors.black,
+                      ),
+                    ),
+                    secondary: Icon(Icons.person,
+                        size: 23,
+                        color: Get.isDarkMode ? Colors.black : Colors.black),
                     autofocus: false,
-                    activeColor: Colors.black,
+                    activeColor: Colors.orange,
                     checkColor: Colors.white,
                     selected: tal,
                     value: tal,
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() {
-                        tal=val!;
+                        tal = val!;
                         role = "STUDENT";
                       });
                     },
@@ -130,24 +139,29 @@ class _UserPageState extends State<UserPage> {
                 child: Container(
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                      color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(15),
+                    color: Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  child:  CheckboxListTile(
+                  child: CheckboxListTile(
                     checkboxShape: CircleBorder(),
-                    title:  Text('O\'quvchi',style: TextStyle(
-                    color: Get.isDarkMode?Colors.black:Colors.black,
-                    ),),
-                    secondary:  Icon(Icons.person,size: 23,color: Get.isDarkMode?Colors.black:Colors.black),
+                    title: Text(
+                      'O\'quvchi',
+                      style: TextStyle(
+                        color: Get.isDarkMode ? Colors.black : Colors.black,
+                      ),
+                    ),
+                    secondary: Icon(Icons.person,
+                        size: 23,
+                        color: Get.isDarkMode ? Colors.black : Colors.black),
                     autofocus: false,
-                    activeColor: Colors.black,
+                    activeColor: Colors.orange,
                     checkColor: Colors.white,
                     selected: bol,
                     value: bol,
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() {
-                        bol=val!;
-                        role = "CHILDREN";
+                        bol = val!;
+                        role = "READER";
                       });
                     },
                   ),
@@ -159,13 +173,19 @@ class _UserPageState extends State<UserPage> {
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
-                    onTap: (){
-                      if(role!.isNotEmpty){
-                        Get.to( NavigationPage(rule: role!,));
-                      }else{
-
+                    onTap: () {
+                      if (role!.isNotEmpty) {
+                        Get.to(NavigationPage(
+                          rule: role!,
+                        ));
+                      } else {
+                        Get.snackbar(
+                            "Talab qilinadi", "Hamma maydon talab qilinadi !",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor:
+                                Get.isDarkMode ? Colors.black : Colors.white,
+                            icon: const Icon(Icons.warning_amber_rounded));
                       }
-
                     },
                     child: Container(
                       padding: const EdgeInsets.all(17),

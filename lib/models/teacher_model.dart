@@ -1,10 +1,15 @@
 import 'dart:convert';
-TeacherModel teacherModelFromJson(String str) => TeacherModel.fromJson(json.decode(str));
+
+TeacherModel teacherModelFromJson(String str) =>
+    TeacherModel.fromJson(json.decode(str));
+
 String teacherModelToJson(TeacherModel data) => json.encode(data.toJson());
+
 class TeacherModel {
   TeacherModel({
-      this.success, 
-      this.data,});
+    this.success,
+    this.data,
+  });
 
   TeacherModel.fromJson(dynamic json) {
     success = json['success'];
@@ -15,6 +20,7 @@ class TeacherModel {
       });
     }
   }
+
   bool? success;
   List<Data>? data;
 
@@ -26,23 +32,25 @@ class TeacherModel {
     }
     return map;
   }
-
 }
 
 Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+
 String dataToJson(Data data) => json.encode(data.toJson());
+
 class Data {
   Data({
-      this.id, 
-      this.science, 
-      this.classRoom, 
-      this.startTime, 
-      this.endTime, 
-      this.name, 
-      this.role, 
-      this.week, 
-      this.note, 
-      this.noteTime,});
+    this.id,
+    this.science,
+    this.classRoom,
+    this.startTime,
+    this.endTime,
+    this.name,
+    this.role,
+    this.week,
+    this.note,
+    this.noteTime,
+  });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -56,6 +64,7 @@ class Data {
     note = json['note'];
     noteTime = json['noteTime'];
   }
+
   int? id;
   String? science;
   String? classRoom;
@@ -81,5 +90,4 @@ class Data {
     map['noteTime'] = noteTime;
     return map;
   }
-
 }

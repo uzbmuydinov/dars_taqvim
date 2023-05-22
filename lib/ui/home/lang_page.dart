@@ -14,22 +14,21 @@ class LangPage extends StatefulWidget {
 }
 
 class _LangPageState extends State<LangPage> {
-
-  bool uz=false;
-  bool ru=false;
-  bool eng=false;
+  bool uz = false;
+  bool ru = false;
+  bool eng = false;
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor:Get.theme.backgroundColor,
+    return Scaffold(
+      backgroundColor: Get.theme.backgroundColor,
       appBar: AppBar(
-        backgroundColor:Get.theme.backgroundColor,
+        backgroundColor: Get.theme.backgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon:  Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color:Get.isDarkMode?Colors.white:Colors.black,
+            color: Get.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Get.back();
@@ -46,16 +45,16 @@ class _LangPageState extends State<LangPage> {
                 child: Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    // color: Colors.white,
-                  ),
+                      // color: Colors.white,
+                      ),
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Tilingizni\ntanlang!",
+                        "Tilingizni\ntanlang!".tr,
                         style: TextStyle(
-                            color: Get.isDarkMode?Colors.white:Colors.black,
+                            color: Get.isDarkMode ? Colors.white : Colors.black,
                             fontSize: 35,
                             fontWeight: FontWeight.w700),
                       )
@@ -71,23 +70,59 @@ class _LangPageState extends State<LangPage> {
                 child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                      color:
+                          Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: CheckboxListTile(
                       checkboxShape: const CircleBorder(),
-                      title:  Text('Uzbekcha',style: TextStyle(color: Get.isDarkMode?Colors.black:Colors.black),),
-                      secondary:  Icon(Icons.person,color: Get.isDarkMode?Colors.black:Colors.black),
+                      title: Text(
+                        'Uzbekcha',
+                        style: TextStyle(
+                            color:
+                                Get.isDarkMode ? Colors.black : Colors.black),
+                      ),
+                      secondary: Image.asset("assets/images/img_9.png",height: 35,),
                       autofocus: false,
                       activeColor: Colors.orange,
                       checkColor: Colors.white,
                       value: uz,
-                      onChanged: (val){
+                      onChanged: (val) {
                         setState(() {
-                          uz=val!;
+                          uz = val!;
                         });
                       },
-                    )
+                    )),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: CheckboxListTile(
+                    checkboxShape: const CircleBorder(),
+                    title: Text(
+                      'Ruscha',
+                      style: TextStyle(
+                          color: Get.isDarkMode ? Colors.black : Colors.black),
+                    ),
+                    secondary:  Image.asset("assets/images/img_10.png",height: 35,),
+                    autofocus: false,
+                    activeColor: Colors.orange,
+                    checkColor: Colors.white,
+                    value: eng,
+                    onChanged: (val) {
+                      setState(() {
+                        eng = val!;
+                      });
+                    },
+                  ), //Che
                 ),
               ),
               const SizedBox(
@@ -98,44 +133,24 @@ class _LangPageState extends State<LangPage> {
                 child: Container(
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
+                    color: Get.isDarkMode ? Colors.grey : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: CheckboxListTile(
                     checkboxShape: const CircleBorder(),
-                    title:  Text('Inglizcha',style: TextStyle(color: Get.isDarkMode?Colors.black:Colors.black),),
-                    secondary: Icon(Icons.person,color: Get.isDarkMode?Colors.black:Colors.black),
-                    autofocus: false,
-                    activeColor: Colors.orange,
-                    checkColor: Colors.white,
-                    value: eng,
-                    onChanged: (val){
-                      setState(() {
-                        eng=val!;
-                      });
-                    },
-                  ), //Che
-                ),),
-              const SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Get.isDarkMode?Colors.grey:Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child:CheckboxListTile(
-                    checkboxShape: const CircleBorder(),
-                    title:  Text('Ruscha',style: TextStyle(color: Get.isDarkMode?Colors.black:Colors.black),),
-                    secondary:  Icon(Icons.person,color: Get.isDarkMode?Colors.black:Colors.black),
+                    title: Text(
+                      'Inglizcha',
+                      style: TextStyle(
+                          color: Get.isDarkMode ? Colors.black : Colors.black),
+                    ),
+                    secondary: Image.asset("assets/images/img_11.png",height: 35,),
                     autofocus: false,
                     activeColor: Colors.orange,
                     checkColor: Colors.white,
                     value: ru,
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() {
-                        ru=val!;
+                        ru = val!;
                       });
                     },
                   ), //C
@@ -147,12 +162,12 @@ class _LangPageState extends State<LangPage> {
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       List<UserModel> user = [];
-                      user =  HiveService.readUsers();
-                      if(user.isNotEmpty){
+                      user = HiveService.readUsers();
+                      if (user.isNotEmpty) {
                         Get.to(const SignInPage());
-                      }else{
+                      } else {
                         Get.to(const RegisterPage());
                       }
                     },

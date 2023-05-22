@@ -11,17 +11,15 @@ class AddTaskBarPage extends StatefulWidget {
   final int week;
   final String role;
 
-  const AddTaskBarPage({Key? key,required this.week, required this.role}) : super(key: key);
+  const AddTaskBarPage({Key? key, required this.week, required this.role})
+      : super(key: key);
 
   @override
   State<AddTaskBarPage> createState() => _AddTaskBarPageState();
 }
 
 class _AddTaskBarPageState extends State<AddTaskBarPage> {
-
-  bool isSelected=false;
-
-  final TaskController _taskController=Get.put(TaskController());
+  final TaskController _taskController = Get.put(TaskController());
 
   final AddTaskController addTaskController = Get.find<AddTaskController>();
 
@@ -29,7 +27,7 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
   String _endTime = "9:30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
 
-  int _selectedColor=0;
+  int _selectedColor = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +44,24 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
                 DateFormat.EEEE().format(DateTime.now()),
                 style: headingStyle,
               ),
-               MyInputField(title: "Fan", hint: "Fan",controller: addTaskController.scienceController,),
-             widget.role == 'TEACHER' ?  MyInputField(
-                  title: "Sinf", hint: "Sinf",controller: addTaskController.teacherORClassRoomController,)
-              : MyInputField(
-               title: "O'qituvchi ismi", hint: "O'qituvchi ismi",controller: addTaskController.teacherORClassRoomController,),
+              MyInputField(
+                title: "Fan",
+                hint: "Fan",
+                controller: addTaskController.scienceController,
+              ),
+              widget.role == 'TEACHER'
+                  ? MyInputField(
+                      title: "Sinf",
+                      hint: "Sinf",
+                      controller:
+                          addTaskController.teacherORClassRoomController,
+                    )
+                  : MyInputField(
+                      title: "O'qituvchi ismi",
+                      hint: "O'qituvchi ismi",
+                      controller:
+                          addTaskController.teacherORClassRoomController,
+                    ),
               MyInputField(
                 title: "Xabar vaqti",
                 hint: DateFormat.yMd().format(_selectedDate),
@@ -68,161 +79,127 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
                 children: [
                   Expanded(
                       child: MyInputField(
-                        title: "Boshlanish vaqti",
-                        hint: _startTime,
-                        widget: IconButton(
-                          onPressed: () {
-                            _getTimeFromUser(isStartTime: true);
-                          },
-                          icon: const Icon(
-                            Icons.access_time_rounded,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      )),
+                    title: "Boshlanish vaqti",
+                    hint: _startTime,
+                    widget: IconButton(
+                      onPressed: () {
+                        _getTimeFromUser(isStartTime: true);
+                      },
+                      icon: const Icon(
+                        Icons.access_time_rounded,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  )),
                   const SizedBox(
                     width: 12,
                   ),
                   Expanded(
                       child: MyInputField(
-                        title: "Tugash vaqti",
-                        hint: _endTime,
-                        widget: IconButton(
-                          onPressed: () {
-                            _getTimeFromUser(isStartTime: false);
-                          },
-                          icon: const Icon(
-                            Icons.access_time_rounded,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      )),
+                    title: "Tugash vaqti",
+                    hint: _endTime,
+                    widget: IconButton(
+                      onPressed: () {
+                        _getTimeFromUser(isStartTime: false);
+                      },
+                      icon: const Icon(
+                        Icons.access_time_rounded,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  )),
                 ],
               ),
-              const SizedBox(height: 28,),
+              const SizedBox(
+                height: 28,
+              ),
               Row(
                 children: [
                   Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Container(
-                          padding: const EdgeInsets.all(1),
-                          decoration: BoxDecoration(
-                            color:Get.isDarkMode?Colors.grey.shade700:Colors.grey.shade300,
-                            borderRadius: BorderRadius.circular(10),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Get.isDarkMode
+                              ? Colors.grey.shade700
+                              : Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            "Eslatma",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey.shade500,
+                                fontWeight: FontWeight.w800),
                           ),
-                          child:ListTile(
-                            title: Text("Eslatma",style: TextStyle(fontSize: 16,color: Colors.grey.shade500,fontWeight: FontWeight.w800),),
-                            trailing: Switch(
-                              onChanged: (value){
-                                setState(() {
-                                  isSelected=!isSelected;
-                                });
-
-                              },
-                              value: isSelected,
-                              activeColor: Colors.green,
-                            ),
+                          trailing: Switch(
+                            onChanged: (value) {
+                              setState(() {
+                                addTaskController.isSelected =
+                                    !addTaskController.isSelected;
+                              });
+                            },
+                            value: addTaskController.isSelected,
+                            activeColor: Colors.green,
                           ),
                         ),
                       ),
-
+                    ),
                   ),
-                  const SizedBox(width: 70,),
-                 ElevatedButton(
-                            onPressed: ()  {
-                              _validateDate();
-                              addTaskController.addTaskNetwork(widget.week, widget.role);
-                            },
-                            child: Text("Saqlash"),
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.orange)),
-
+                  const SizedBox(
+                    width: 70,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _validateDate();
+                      addTaskController.addTaskNetwork(
+                          widget.week, widget.role);
+                    },
+                    child: Text("Saqlash"),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.orange)),
                   ),
                 ],
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                // children: [
-                //   _colorPallete(),
-                //   ElevatedButton(
-                //     onPressed: ()  {
-                //       _validateDate();
-                //       addTaskController.addTaskNetwork(widget.week);
-                //     },
-                //     child:  const Text("Saqlash"),
-                //     style: ButtonStyle(
-                //         backgroundColor: MaterialStateProperty.all(Colors.orange)),
-                //   ),
-                // ],
               ),
             ],
           ),
-
         ),
       ),
     );
   }
-  
-  _validateDate(){
-    if(addTaskController.scienceController.text.isNotEmpty&&addTaskController.teacherORClassRoomController.text.isNotEmpty){
+
+  _validateDate() {
+    if (addTaskController.scienceController.text.isNotEmpty &&
+        addTaskController.teacherORClassRoomController.text.isNotEmpty) {
       _addTaskToDb();
       Get.back();
-    }else if(addTaskController.scienceController.text.isEmpty||addTaskController.teacherORClassRoomController.text.isEmpty){
+    } else if (addTaskController.scienceController.text.isEmpty ||
+        addTaskController.teacherORClassRoomController.text.isEmpty) {
       Get.snackbar("Talab qilinadi", "Hamma maydon talab qilinadi !",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
-      icon: const Icon(Icons.warning_amber_rounded));
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
+          icon: const Icon(Icons.warning_amber_rounded));
     }
   }
-  _addTaskToDb()async {
-    int value =await _taskController.addTask(
-        task:Task(
-          note: addTaskController.teacherORClassRoomController.text,
-          title:addTaskController.scienceController.text,
-          date:DateFormat.yMd().format(addTaskController.selectedDate),
-          startTime:addTaskController.startTimeController.text,
-          endTime:addTaskController.endTimeController.text,
-          color:_selectedColor,
-          isCompleted:0,
-        ),
+
+  _addTaskToDb() async {
+    int value = await _taskController.addTask(
+      task: Task(
+        note: addTaskController.teacherORClassRoomController.text,
+        title: addTaskController.scienceController.text,
+        date: DateFormat.yMd().format(addTaskController.selectedDate),
+        startTime: addTaskController.startTimeController.text,
+        endTime: addTaskController.endTimeController.text,
+        color: _selectedColor,
+        isCompleted: 0,
+      ),
     );
-    print("My  id is "+"$value");
+    print("My  id is " + "$value");
   }
-  _colorPallete(){
-    return  Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Rang",
-          style: titleStyle,
-        ),
-        const SizedBox(height: 8.0,),
-        Wrap(
-            children: List<Widget>.generate(3, (int index) {
-              return  GestureDetector(
-                onTap: (){
-                  setState(() {
-                    _selectedColor=index;
-                    print("$index");
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: CircleAvatar(
-                    radius: 14,
-                    backgroundColor: index==0?primaryClr:index==1?pinkClr:yellowClr,
-                    child: _selectedColor==index?const Icon(Icons.done,
-                      color: Colors.white,
-                      size: 16,
-                    ):Container(),
-                  ),
-                ),
-              );
-            })
-        )
-      ],
-    );
-  }
+
   _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
@@ -257,12 +234,18 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
         debugPrint('vvvvvvvvvv>${sdatetime.substring(0, 13)}');
 
         addTaskController.stimestamp = sdate.microsecondsSinceEpoch;
-
       });
     } else {
       print("U null yoki biror narsa noto'g'ri");
     }
   }
+  //
+  // String formattedDate(timeStamp){
+  //   var dateFormatTimeStamp=
+  //       DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds*1000);
+  //   return DateFormat('dd-MM-yyyy hh:mm a').format(dateFormatTimeStamp);
+  // }
+
 
   _getTimeFromUser({required bool isStartTime}) async {
     var pickedTime = await _showTimePicker();
@@ -273,7 +256,6 @@ class _AddTaskBarPageState extends State<AddTaskBarPage> {
       setState(() {
         DateTime start = DateTime.parse(formatedTime);
         addTaskController.startTime = start.microsecondsSinceEpoch;
-        debugPrint('${addTaskController.startTime}');
       });
     } else if (isStartTime == false) {
       setState(() {

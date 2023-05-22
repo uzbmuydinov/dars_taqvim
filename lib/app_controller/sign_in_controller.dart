@@ -13,27 +13,28 @@ class SignInController extends GetxController {
   TextEditingController numberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
-  void changeRegister() async{
-    final responce =  await NetworkService.POST(
+  void changeRegister() async {
+    final responce = await NetworkService.POST(
         NetworkService.apiSignIn,
         NetworkService.bodySignIn(
             numberController.text.trim(), passwordController.text.trim()));
 
-    if(responce == null){
-      Get.snackbar("Telefon number yoki Parol xato", "Qayta urinib ko'ring",
+    if (responce == null) {
+      Get.snackbar("Telefon number yoki Parol xato".tr, "Qayta urinib ko'ring".tr,
           snackPosition: SnackPosition.TOP,
           backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
-          icon: const Icon(Icons.warning_amber_rounded));
+          icon: const Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.red,
+          ));
       update();
     }
 
     Map<String, dynamic> a = jsonDecode(responce!);
 
-
-    if(a['data']['success'] != false){
+    if (a['data']['success'] != false) {
       Get.to(const UserPage());
-      Get.snackbar("Ro'yxatdan muvaffaqiyatli \n o'tdingiz","         ",
+      Get.snackbar("Ro'yxatdan muvaffaqiyatli\no'tdingiz".tr, "         ",
           snackPosition: SnackPosition.TOP,
           backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
           icon: const Icon(Icons.check, color: Colors.green));

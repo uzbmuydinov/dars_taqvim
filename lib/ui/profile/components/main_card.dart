@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MainCard extends StatelessWidget {
-
   final Widget iconWidget;
   final Widget iconWidgetLast;
   final String mainText;
   final VoidCallback onPressed;
 
-  const MainCard({Key? key, required this.iconWidgetLast, required this.mainText, required this.onPressed, required this.iconWidget,}) : super(key: key);
+  const MainCard({
+    Key? key,
+    required this.iconWidgetLast,
+    required this.mainText,
+    required this.onPressed,
+    required this.iconWidget,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       height: 54,
       decoration: BoxDecoration(
@@ -39,19 +44,17 @@ class MainCard extends StatelessWidget {
           ),
           Spacer(),
           IconButton(
-
             splashRadius: 1,
             alignment: Alignment.centerRight,
             padding: EdgeInsets.zero,
             onPressed: onPressed,
-            icon:iconWidgetLast,
+            icon: iconWidgetLast,
           ),
           const SizedBox(
             width: 21.81,
           ),
         ],
       ),
-
     );
   }
 }

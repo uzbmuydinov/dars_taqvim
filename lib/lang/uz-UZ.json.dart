@@ -1,0 +1,1 @@
+const Map<String, String> uz = {'Changed':"O'zgardi"};

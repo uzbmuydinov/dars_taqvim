@@ -5,7 +5,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-TokenModel tokenModelFromJson(String str) => TokenModel.fromJson(json.decode(str));
+TokenModel tokenModelFromJson(String str) =>
+    TokenModel.fromJson(json.decode(str));
 
 String tokenModelToJson(TokenModel data) => json.encode(data.toJson());
 
@@ -19,14 +20,14 @@ class TokenModel {
   });
 
   factory TokenModel.fromJson(Map<String, dynamic> json) => TokenModel(
-    success: json["success"],
-    data: Data.fromJson(json["data"]),
-  );
+        success: json["success"],
+        data: Data.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "data": data.toJson(),
-  };
+        "success": success,
+        "data": data.toJson(),
+      };
 }
 
 class Data {
@@ -41,14 +42,14 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    tokenType: json["tokenType"],
-    accessToken: json["accessToken"],
-    refreshToken: json["refreshToken"],
-  );
+        tokenType: json["tokenType"],
+        accessToken: json["accessToken"],
+        refreshToken: json["refreshToken"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "tokenType": tokenType,
-    "accessToken": accessToken,
-    "refreshToken": refreshToken,
-  };
+        "tokenType": tokenType,
+        "accessToken": accessToken,
+        "refreshToken": refreshToken,
+      };
 }
